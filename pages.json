@@ -1,34 +1,36 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{   // 首页
-			"path": "pages/home/index/index",
-			"style": {}
+		{ // 首页
+			"path": "pages/home/index/index"
+
 		},
-		{	// 社区
+		{ // 社区
 			"path": "pages/community/index/index",
 			"style": {}
 		},
-		{  // 通知
+		{ // 通知
 			"path": "pages/inform/index/index",
 			"style": {}
 		},
-		{  //我的
+		{ //我的
 			"path": "pages/my/index/index",
 			"style": {}
+		}, {
+			"path": "pages/inform/push/push",
+			"style": {}
+		}, {
+			"path": "pages/inform/interaction/interaction",
+			"style": {}
+		}, {
+			"path": "pages/inform/private/private",
+			"style": {}
+		}, {
+			"path": "pages/home/campaign/campaign",
+			"style": {
+				"navigationBarTitleText": "专题"
+			}
 		}
-	    ,{
-            "path" : "pages/inform/push/push",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/inform/interaction/interaction",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/inform/private/private",
-            "style" : {}
-        }
-    ],
+	],
 	"easycom": {
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
@@ -36,7 +38,9 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "Eyepetizer",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "custom"
+
 	},
 	"tabBar": {
 		"color": "#909399",

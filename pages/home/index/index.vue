@@ -1,48 +1,86 @@
 <template>
 	<view class="home">
-		<swiper class="swiper" :current="current">
+		<c-navigation>
+			<u-tabs
+				ref="tabs"
+				font-size="26"
+				:list="list"
+				@change="tabsChange"
+				bg-color="#FAFAFA"
+				:current="current"
+				bar-height="6"
+				bar-width="40"
+				inactive-color="#888888"
+				active-color="#303030"
+			></u-tabs>
+		</c-navigation>
+		<swiper class="swiper" :current="current" @change="swiperChange">
 			<!-- 发现 -->
-			<swiper-item class="swiper-item"><home-Find></home-Find></swiper-item>
+			<swiper-item class="swiper-item">
+				<scroll-view class="scroll-view" scroll-y="true"><home-Find></home-Find></scroll-view>
+			</swiper-item>
 			<!-- 推荐 -->
-			<swiper-item class="swiper-item"><home-recommend></home-recommend></swiper-item>
+			<swiper-item class="swiper-item">
+				<scroll-view class="scroll-view" scroll-y="true"><home-recommend></home-recommend></scroll-view>
+			</swiper-item>
 			<!-- 日报 -->
-			<swiper-item class="swiper-item"><home-dailyPaper></home-dailyPaper></swiper-item>
+			<swiper-item class="swiper-item">
+				<scroll-view class="scroll-view" scroll-y="true"><home-dailyPaper></home-dailyPaper></scroll-view>
+			</swiper-item>
 		</swiper>
-		<u-tabbar :list="vuex_tabbar" :mid-button="true"></u-tabbar>
+		<!-- <u-tabbar :height="80" :list="vuex_tabbar"></u-tabbar> -->
+		<c-tabbar :list="vuex_tabbar"></c-tabbar>
 	</view>
 </template>
 
 <script>
 import HomeFind from '../find/find.vue';
+import CNavigation from '@/components/navigation/navigation.vue';
+import CTabbar from '@/components/tabbar/tabbar.vue';
 import HomeRecommend from '../recommend/recommend.vue';
 import HomeDailyPaper from '../dailyPaper/dailyPaper.vue';
 export default {
 	components: {
+		CNavigation,
+		CTabbar,
 		HomeFind,
 		HomeRecommend,
 		HomeDailyPaper
 	},
 	data() {
 		return {
-			current: 1
+			current: 0,
+			// tabCurrent: 0,
+			list: [
+				{
+					name: '发现'
+				},
+				{
+					name: '推荐'
+				},
+				{
+					name: '日报'
+				}
+			]
 		};
 	},
-	methods: {}
+
+	methods: {
+		tabsChange(index) {
+			this.current = index;
+		},
+		swiperChange(e) {
+			this.current = e.detail.current;
+		}
+	}
 };
 </script>
 
 <style lang="scss" scoped>
-.home {
-	border: 1px solid;
-	height: 100vh;
-}
-
-.content {
-	height: 100vh;
-}
 .swiper,
-.swiper-item {
-	height: 100%;
+.swiper-item,
+.scroll-view {
+	height: calc(100vh - 90rpx - var(--status-bar-height) - 90rpx);
 }
 
 .list {

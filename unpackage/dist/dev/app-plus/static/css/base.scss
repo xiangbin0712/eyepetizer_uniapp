@@ -1,0 +1,103 @@
+.container {
+	margin: 0 30rpx;
+}
+
+image {
+	height: 100%;
+	display: block;
+}
+
+
+/* start--Retina 屏幕下的 1px 边框--start */
+.hairline-border,
+.hairline-border-bottom,
+.hairline-border-left,
+.hairline-border-right,
+.hairline-border-top,
+.hairline-border-top-bottom {
+	position: relative
+}
+
+.hairline-border-bottom:after,
+.hairline-border-left:after,
+.hairline-border-right:after,
+.hairline-border-top-bottom:after,
+.hairline-border-top:after,
+.hairline-border:after {
+	/* #ifndef APP-NVUE */
+	content: ' ';
+	/* #endif */
+	position: absolute;
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	box-sizing: border-box;
+	-webkit-transform-origin: 0 0;
+	transform-origin: 0 0;
+	// 多加0.1%，能解决有时候边框缺失的问题
+	width: 199.8%;
+	height: 199.7%;
+	transform: scale(0.5, 0.5);
+	// border: 0 solid $u-border-color;
+	z-index: 2;
+}
+
+.hairline-border-top:after {
+	border-top-width: 1px
+}
+
+.hairline-border-left:after {
+	border-left-width: 1px
+}
+
+.hairline-border-right:after {
+	border-right-width: 1px
+}
+
+.hairline-border-bottom:after {
+	border-bottom-width: 1px
+}
+
+.hairline-border-top-bottom:after {
+	border-width: 1px 0
+}
+
+.hairline-border:after {
+	border-width: 1px
+}
+/* end--Retina 屏幕下的 1px 边框--end */
+// text
+.tac {
+	text-align: center;
+}
+.tal {
+	text-align: left;
+}
+.tar {
+	text-align: right;
+}
+
+// font
+.font-30 {
+	font-size: 30rpx;
+}
+
+// flex
+.flex {
+	display: flex;
+	align-items: center;
+}
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.flex-1 {
+	flex: 1;
+}
+
+.flex-col {
+	display: flex;
+	flex-direction: column;
+}
