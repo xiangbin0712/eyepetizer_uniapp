@@ -16,9 +16,13 @@
 		</c-navigation>
 		<swiper class="swiper" :current="current" @change="swiperChange">
 			<!-- 推荐 -->
-			<swiper-item class="swiper-item"><community-recommend></community-recommend></swiper-item>
+			<swiper-item class="swiper-item">
+				<scroll-view class="scroll-view" scroll-y="true"><community-recommend></community-recommend></scroll-view>
+			</swiper-item>
 			<!-- 关注 -->
-			<swiper-item class="swiper-item"><community-focus></community-focus></swiper-item>
+			<swiper-item class="swiper-item">
+				<scroll-view class="scroll-view" scroll-y="true"><community-focus></community-focus></scroll-view>
+			</swiper-item>
 		</swiper>
 		<!-- <u-tabbar :list="vuex_tabbar"></u-tabbar -->
 		<c-tabbar :list="vuex_tabbar"></c-tabbar>
@@ -62,11 +66,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .swiper,
-.swiper-item {
-	// height: 100%;
-	height: 100vh;
+.swiper-item,
+.scroll-view {
+	height: calc(100vh - 90rpx - var(--status-bar-height) - 90rpx);
 }
 
 .list {

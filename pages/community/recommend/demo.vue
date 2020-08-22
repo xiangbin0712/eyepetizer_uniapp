@@ -15,30 +15,17 @@
 		<!-- 瀑布流 -->
 		<view class="waterfall-flow">
 			<u-waterfall v-model="flowList">
-				<template v-slot:left="{ leftList }">
-					<view class="waterfall-flow-left-item" v-for="(item, index) in leftList" :key="index">
-						<u-lazy-load threshold="-450" border-radius="10" :image="item.data.content.data.cover.feed" :index="index"></u-lazy-load>
-						<view class="description text-over-three">{{ item.data.content.data.description }}</view>
-						<view class="auth-like flex">
-							<view class="auth flex">
-								<image class="avatar" :src="item.data.header.icon" mode=""></image>
-								<text class="issuerName">{{ item.data.header.issuerName }}</text>
-							</view>
-							<view class="like">{{ item.data.content.data.consumption.collectionCount }}</view>
-						</view>
+				<template v-slot:left="{leftList}">
+					<view v-for="(item, index) in leftList" :key="index">
+					<view class="">
+						<!-- <image src="" mode=""></image> -->
+						
+					</view>
 					</view>
 				</template>
-				<template v-slot:right="{ rightList }">
-					<view class="waterfall-flow-right-item" v-for="(item, index) in rightList" :key="index">
-						<u-lazy-load threshold="-450" border-radius="10" :image="item.data.content.data.cover.feed" :index="index"></u-lazy-load>
-						<view class="description">{{ item.data.content.data.description }}</view>
-						<view class="auth-like flex">
-							<view class="auth flex">
-								<image class="avatar" :src="item.data.header.icon" mode=""></image>
-								<text class="issuerName">{{ item.data.header.issuerName }}</text>
-							</view>
-							<view class="like">{{ item.data.content.data.consumption.collectionCount }}</view>
-						</view>
+				<template v-slot:right="{rightList}">
+					<view v-for="(item, index) in rightList" :key="index">
+						<!-- 这里编写您的内容，item为您传递给v-model的数组元素 -->
 					</view>
 				</template>
 			</u-waterfall>
@@ -51,8 +38,8 @@ export default {
 	data() {
 		return {
 			locationA: [],
-			locationB: [], //banner
-			flowList: []
+			locationB: [] ,//banner
+			flowList:[]
 		};
 	},
 	created() {
@@ -67,7 +54,8 @@ export default {
 			// this.locationA= this._filter(res.itemList,"squareCardOfCommunityContent")
 			this.locationA = res.itemList[0].data.itemList;
 			this.locationB = res.itemList[1].data.itemList;
-			this.flowList = this._filter(res.itemList, 'communityColumnsCard');
+			this.flowList = this._filter(res.itemList,"communityColumnsCard")
+			// console.log(this.flowList)
 		},
 
 		// filter
@@ -114,39 +102,5 @@ export default {
 	height: 100%;
 	width: 100%;
 	border-radius: 10rpx;
-}
-
-// 瀑布流
-.waterfall-flow {
-	margin: 0 30rpx;
-	.waterfall-flow-left-item {
-		padding-bottom: 50rpx;
-		margin-right: 10rpx;
-	}
-	.waterfall-flow-right-item {
-		padding-bottom: 50rpx;
-		margin-left: 10rpx;
-	}
-
-	.description {
-		font-size: 24rpx;
-		color: #555555;
-		padding: 20rpx 0;
-	}
-
-	.auth-like {
-		justify-content: space-between;
-
-		.avatar {
-			height: 30rpx;
-			width: 30rpx;
-			border-radius: 50%;
-			margin-right: 14rpx;
-		}
-		.issuerName {
-			font-size: 24rpx;
-			color: #808080;
-		}
-	}
 }
 </style>

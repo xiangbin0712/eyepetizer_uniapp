@@ -58,9 +58,14 @@ export default {
 </script>
 
 <style scoped>
+.content {
+	z-index: 99;
+}
 .status_bar {
 	height: var(--status-bar-height);
 	width: 100%;
+	background-color: #fafafa;
+	opacity: 0.1;
 }
 .top-navigation {
 	position: fixed;
@@ -70,7 +75,7 @@ export default {
 }
 .navigation {
 	height: 90rpx;
-	background-color: #FAFAFA;
+	background-color: #fafafa;
 	box-shadow: #000000;
 	justify-content: space-between;
 }

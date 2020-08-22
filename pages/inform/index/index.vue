@@ -16,11 +16,17 @@
 		</c-navigation>
 		<swiper class="swiper" :current="current" @change="swiperChange">
 			<!-- 推送 -->
-			<swiper-item class="swiper-item"><inform-push></inform-push></swiper-item>
+			<swiper-item class="swiper-item">
+				<scroll-view class="scroll-view" scroll-y="true"><inform-push></inform-push></scroll-view>
+			</swiper-item>
 			<!-- 互动 -->
-			<swiper-item class="swiper-item"><inform-private></inform-private></swiper-item>
+			<swiper-item class="swiper-item">
+				<scroll-view class="scroll-view" scroll-y="true"><inform-private></inform-private></scroll-view>
+			</swiper-item>
 			<!-- 私信 -->
-			<swiper-item class="swiper-item"><inform-interaction></inform-interaction></swiper-item>
+			<swiper-item class="swiper-item">
+				<scroll-view class="scroll-view" scroll-y="true"><inform-interaction></inform-interaction></scroll-view>
+			</swiper-item>
 		</swiper>
 		<!-- <u-tabbar :list="vuex_tabbar" :mid-button="true"></u-tabbar> -->
 		<c-tabbar :list="vuex_tabbar"></c-tabbar>
@@ -69,12 +75,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.inform {
-	height: 100vh;
-}
-
 .swiper,
-.swiper-item {
-	height: 100%;
+.swiper-item,
+.scroll-view {
+	height: calc(100vh - 90rpx - 80rpx - var(--status-bar-height));
 }
 </style>

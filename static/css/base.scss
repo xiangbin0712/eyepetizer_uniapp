@@ -77,6 +77,17 @@ image {
 	text-align: right;
 }
 
+//  文字 三行
+.text-over-three {
+    display: -webkit-box;
+    overflow: hidden;
+    white-space: normal !important;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical
+}
+
 // font
 .font-30 {
 	font-size: 30rpx;

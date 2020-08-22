@@ -83,7 +83,9 @@ export default {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	z-index: 99;
 	height: 80rpx;
+	background-color: #fafafa;
 	.content:after {
 		border-top: 1rpx solid rgba(0, 0, 0, 0.2);
 	}
