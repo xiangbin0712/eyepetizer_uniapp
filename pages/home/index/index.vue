@@ -49,7 +49,7 @@ export default {
 	},
 	data() {
 		return {
-			current: 0,
+			current: 2,
 			// tabCurrent: 0,
 			list: [
 				{

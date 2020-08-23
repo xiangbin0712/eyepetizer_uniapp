@@ -5,7 +5,7 @@
 		<view class="section hot-category">
 			<view class="header container">
 				<view class="title">热门分类</view>
-				<view class="more">查看全部分类</view>
+				<view class="more" @click="goCategoriesAll">查看全部分类</view>
 			</view>
 			<view class="content container">
 				<scroll-view class="scroll-view container" scroll-x="true">
@@ -109,6 +109,7 @@ export default {
 			let dataV4 = await this.$u.get('v4/rankList/videos?strategy=weekly');
 			let dataV5 = await this.$u.get('v5/index/tab/discovery');
 			let dataV7 = await this.$u.get(v7);
+			// console.log(dataV5,1)
 
 			// banner
 			let bannerArr = dataV7.itemList[0].data.itemList;
@@ -141,11 +142,11 @@ export default {
 			});
 		},
 
-		// 专题
-		goMore() {
+		// 热门分类 全部分类
+		goCategoriesAll(){
 			uni.navigateTo({
-				url: `../campaign/campaign?data=${JSON.stringify(this.campaign.itemList)}`
-			});
+				url:"../categories-all/categories-all"
+			})
 		}
 	}
 };

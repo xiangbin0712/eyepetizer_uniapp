@@ -5,12 +5,12 @@
 			<view class="status_bar"><!-- 状态栏 --></view>
 			<!-- 导航栏 -->
 			<view class="navigation flex">
-				<view class="left flex-center">left</view>
+				<view class="left flex-center"></view>
 				<view class="center">
 					<text class="title" v-if="title">{{ title }}</text>
 					<slot></slot>
 				</view>
-				<view class="right">right</view>
+				<view class="right"></view>
 				<!-- <view class="right flex flex-center">
 					<icon-button icon="\ue63a" @click="clickIcon"></icon-button>
 					<icon-button icon="\ue626"></icon-button>

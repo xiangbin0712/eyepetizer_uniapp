@@ -1,89 +1,99 @@
 <template>
 	<view class="daily-paper">
-		<view class="section locationa" v-for="(items, i) in arr" :key="i">
-				{{arr}}
+		<view class="section" v-for="(items, i) in arr" :key="i">
 			<view class="header">
-				<text class="title">{{ items.data.text }}</text>
-				<text class="text-right" v-if="items.data.rightText">{{ items.data.rightText }}</text>
+				<text class="left-text">{{ items.data.text }}</text>
 			</view>
-			<!-- 后续封装成组件 -->
-			<!-- {{items}} -->
-			<view class="list hairline-border" v-for="(item, index) in items.arr"  :key="index" >
-				<view class="preview">
-					<image :src="item.data.content.data.cover.feed" lazy-load mode=""></image>
-					<text class="duration">{{ item.data.content.data.duration | formatTime }}</text>
-				</view>
-				<view class="text-content flex">
-					<view class="auth"><image class="avatar" :src="item.data.content.data.author.icon" mode=""></image></view>
-					<view class="info">
-						<view class="title">{{ item.data.content.data.title }}</view>
-						<view class="tags">{{ item.data.header.description }}</view>
-					</view>
-				</view>
-			</view>
-
-			
+			<view class="content"><list-item type="2" :arr="items.arr"></list-item></view>
 		</view>
 	</view>
 </template>
 
 <script>
+import ListItem from '@/components/list-item/list-item.vue';
 export default {
+	components: {
+		ListItem
+	},
 	data() {
 		return {
 			titleArr: [],
 			locationAArr: [], //开眼精选
-			arr: []
+			arr: [],
+			demo: []
 		};
 	},
 	created() {
 		this.getData();
 	},
-	filters: {
-		formatTime(value) {
-			if (!value) return '';
-			let time = (value / 60).toFixed(2);
-			if (time < 10) return '0' + time;
-		}
-	},
+
 	methods: {
 		async getData() {
-			let url = 'v5/index/tab/feed?udid=2bc07e33a6d845e28af9e2f21a51f17e77e49885&vc=6030071&vn=6.3.7&first_channel=pp&last_channel=pp';
+			let url = 'v5/index/tab/feed?udid=2bc07e33a6d845e28af9e2f21a51f17e77e49885&vc=6030071&vn=6.3.7&size=1080X2029&deviceModel=MI%208&first_channel=pp';
 			let res = await this.$u.get(url);
 			this.splitData(res);
 		},
 
 		splitData(res) {
-			let titleArr = this._filter(res.itemList, 'textCard');
-			let followCard = this._filter(res.itemList, 'followCard');
-			let locationA = followCard.filter((item, i) => {
-				return i < 5;
+			// let textCard = this._filter(res.itemList, 'TextCard'); //title
+			// let followCard = this._filter(res.itemList, 'FollowCard'); // item
+			let title = [];
+			let items = [];
+			res.itemList.forEach((item, i) => {
+				if (item.type === 'textCard') {
+					if (title.length) {
+						title[title.length - 1].arr = items;
+						items = [];
+					}
+					title.push(item);
+				} else if (item.type === 'followCard') {
+					items.push(item);
+				}
+
+				if (items.length) {
+					title[title.length - 1].arr = items;
+				}
 			});
-			let todyData = followCard.slice(0,4)
-			let yestaday = ollowCard.filter((item, i) => {
-				return i < 5;
-			});
-			let locationB =this._filter(res.itemList, 'informationCard');
+			this.arr = title;
+
+			// this.demo = this._groupArray(followCard, 5);
+
+			// let locationA = followCard.filter((item, i) => {
+			// 	return i < 5;
+			// });
+			// let todyData = followCard.slice(0,4)
+			// let yestaday = ollowCard.filter((item, i) => {
+			// 	return i < 5;
+			// });
 			// 今日开眼精选
-			titleArr[0].arr = locationA;
-			// titleArr[1].arr = locationB;
-			this.arr = titleArr
-			// console.log(this.arr,123)
+			// this.arr = textCard;
 
 			// 每日资讯精选
-			// let a = this._filter(res.itemList, 'informationCard');
-			// arr1[1].arr="ceshi"
+			// let informationCard = this._filter(res.itemList, 'informationCard');
+		},
 
-			// console.log(arr1[1], 123);
-			// console.log(this._filter(res.itemList,"informationCard"))
+		_groupArray(data, cols) {
+			const list = [];
+			let current = [];
+			data.forEach(item => {
+				current.push(item);
+				if (current.length === cols) {
+					list.push(current);
+					current = [];
+				}
+			});
 
-			// this.arr = arr1;
+			// if(current.length){
+			// 	list.push(current)
+			// }
+			return list;
 		},
 
 		// filter
 		_filter(arr, type, num) {
 			return arr.filter(item => {
-				return item.type === type;
+				// return item.type === type;
+				return item.data && item.data.dataType === type;
 			});
 		}
 	}
@@ -99,7 +109,7 @@ export default {
 		align-items: flex-end;
 		justify-content: space-between;
 
-		.title {
+		.left-text {
 			font-weight: bold;
 			font-size: 44rpx;
 		}
