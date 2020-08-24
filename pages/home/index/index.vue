@@ -25,10 +25,19 @@
 			</swiper-item>
 			<!-- 日报 -->
 			<swiper-item class="swiper-item">
-				<scroll-view class="scroll-view" scroll-y="true"><home-dailyPaper></home-dailyPaper></scroll-view>
+				<scroll-view
+					@scrolltolower="scrolltolower"
+					@refresherpulling="onPulling"
+					refresher-enabled
+					refresher-threshold="70"
+					@refresherrefresh="onRefresh"
+					class="scroll-view"
+					scroll-y="true"
+				>
+					<home-dailyPaper ref="feed"></home-dailyPaper>
+				</scroll-view>
 			</swiper-item>
 		</swiper>
-		<!-- <u-tabbar :height="80" :list="vuex_tabbar"></u-tabbar> -->
 		<c-tabbar :list="vuex_tabbar"></c-tabbar>
 	</view>
 </template>
@@ -49,8 +58,7 @@ export default {
 	},
 	data() {
 		return {
-			current: 2,
-			// tabCurrent: 0,
+			current: 1,
 			list: [
 				{
 					name: '发现'
@@ -71,6 +79,16 @@ export default {
 		},
 		swiperChange(e) {
 			this.current = e.detail.current;
+		},
+		// 底部刷新
+		scrolltolower(e) {
+			this.$refs.feed.upData();
+		},
+		onRefresh() {
+			console.log('xiala');
+		},
+		onPulling() {
+			console.log('refresherpulling');
 		}
 	}
 };

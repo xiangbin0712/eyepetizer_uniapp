@@ -11,7 +11,7 @@
 				<scroll-view class="scroll-view container" scroll-x="true">
 					<view class="scroll-view-item" v-for="(items, i) in newCategoryList" :key="items.id">
 						<view class="block flex-center" v-for="(item, index) in items" :key="item.data.id">
-							<image :src="item.data.icon" mode=""></image>
+							<image :src="item.data.icon" lazy-load mode=""></image>
 							<text class="font-30">{{ item.data.title }}</text>
 						</view>
 					</view>

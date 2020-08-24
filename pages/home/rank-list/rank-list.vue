@@ -1,22 +1,58 @@
 <template>
 	<view class="rank-list">
-		<u-tabs-swiper
-			class="tabs-swiper"
-			ref="uTabs"
+		<u-tabs
+			class="tabs"
+			ref="tabs"
+			font-size="26"
 			:list="tabList"
+			@change="tabsChange"
 			bg-color="#FAFAFA"
+			:current="defaultIdx"
+			bar-height="6"
+			item-width="250"
+			:is-scroll="false"
 			inactive-color="#888888"
 			active-color="#303030"
-			font-size="26"
-			bar-height="6"
-			:current="current"
-			@change="tabsChange"
-			:is-scroll="false"
-			swiperWidth="750"
-		></u-tabs-swiper>
-		<swiper class="swiper" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
-			<swiper-item class="swiper-item" v-for="(item, index) in 4" :key="index">
-				<scroll-view class="scroll-view" scroll-y @scrolltolower="onreachBottom"><list-item v-if="dataObj" :arr="dataObj.itemList"></list-item></scroll-view>
+		></u-tabs>
+		<swiper easing-function="easeInCubic" class="swiper" :current="defaultIdx" @change="swiperChange">
+			<swiper-item class="swiper-item">
+				<scroll-view class="scroll-view" scroll-y="true" @scrolltolower="onLower">
+					<block v-if="obj.week" v-for="(item, i) in obj.week" :key="i">
+						<list-item
+							:title="item.data.title"
+							:avatar="item.data.author.icon"
+							:bg="item.data.cover.homepage"
+							:duration="item.data.duration"
+							:description="item.data.author.name + item.data.category"
+						></list-item>
+					</block>
+				</scroll-view>
+			</swiper-item>
+			<swiper-item class="swiper-item">
+				<scroll-view class="scroll-view" scroll-y="true">
+					<block v-if="obj.month" v-for="(item, i) in obj.month" :key="i">
+						<list-item
+							:title="item.data.title"
+							:avatar="item.data.author.icon"
+							:bg="item.data.cover.homepage"
+							:duration="item.data.duration"
+							:description="item.data.author.name + item.data.category"
+						></list-item>
+					</block>
+				</scroll-view>
+			</swiper-item>
+			<swiper-item class="swiper-item">
+				<scroll-view class="scroll-view" scroll-y="true">
+					<block v-if="obj.historical" v-for="(item, i) in obj.historical" :key="i">
+						<list-item
+							:title="item.data.title"
+							:avatar="item.data.author.icon"
+							:bg="item.data.cover.feed"
+							:duration="item.data.duration"
+							:description="item.data.author.name + item.data.category"
+						></list-item>
+					</block>
+				</scroll-view>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -31,13 +67,13 @@ export default {
 	data() {
 		return {
 			defaultIdx: 0,
-			dataObj: null,
 			tabList: [],
-			current: 0, // tabs组件的current值，表示当前活动的tab选项
-			swiperCurrent: 0 // swiper组件的current值，表示当前那个swiper-item是活动的
+			obj: {},
+			count: 10,
+			textList: ['week', 'month', 'historical']
 		};
 	},
-	created() {
+	mounted() {
 		this.getTabList();
 	},
 	methods: {
@@ -46,42 +82,46 @@ export default {
 			if (res && res.tabInfo && res.tabInfo.tabList) {
 				this.defaultIndex = res.tabInfo.defaultIdx;
 				this.tabList = res.tabInfo.tabList;
-
 				this.getRankList();
-				// let url = res.tabInfo.tabList[res.tabInfo.defaultIdx].apiUrl;
-				// this.weekObj = await this.$u.get(url);
-				// console.log(this.weekObj, 11);
 			}
 		},
 
 		// 获取列表
 		async getRankList() {
-			let url = this.tabList[this.defaultIdx].apiUrl;
-			this.dataObj = await this.$u.get(url);
+			let defaultIdx = this.defaultIdx;
+			let url = this.tabList[defaultIdx].apiUrl;
+			let res = await this.$u.get(url);
+			let key = this.textList[defaultIdx];
+			if (res && res.itemList) {
+				this.$set(this.obj, key, res.itemList);
+			}
 		},
 
 		// tabs通知swiper切换
 		tabsChange(index) {
-			this.swiperCurrent = index;
-		},
-		// swiper-item左右移动，通知tabs的滑块跟随移动
-		transition(e) {
-			let dx = e.detail.dx;
-			this.$refs.uTabs.setDx(dx);
-		},
-		// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
-		// swiper滑动结束，分别设置tabs和swiper的状态
-		animationfinish(e) {
-			this.dataObj = [];
-			let current = e.detail.current;
-			this.$refs.uTabs.setFinishCurrent(current);
-			this.swiperCurrent = current;
-			this.current = current;
-			this.defaultIdx = current;
+			this.defaultIdx = index;
 			this.getRankList();
 		},
-		// scroll-view到底部加载更多
-		onreachBottom() {}
+		/**
+		 * 切换swiper获取数据
+		 * 当前页面没有数据 =>请求数据
+		 * 在当前页为周排行或者总排行时候互相重置
+		 */
+		swiperChange(e) {
+			let defaultIdx = e.detail.current;
+			this.defaultIdx = defaultIdx;
+			let key = this.textList[defaultIdx];
+			if (!this.obj[key] || !this.obj[key].length) this.getRankList();
+			if (defaultIdx == 0) this.obj.historical = [];
+			if (defaultIdx == 2) this.obj.week = [];
+		},
+		
+
+		// 触底
+		// @todo 加锁
+		onLower() {
+			// console.log('loadmore');
+		}
 	}
 };
 </script>
@@ -89,14 +129,19 @@ export default {
 <style lang="scss" scoped>
 .rank-list {
 	margin: 0 30rpx;
-	.tabs-swiper {
+	.tabs {
 		position: fixed;
+		z-index: 1;
 		top: 0;
 	}
 }
-.swiper,
-.swiper-item,
-.scroll-view {
-	height: calc(100vh - 80rpx);
+
+.swiper {
+	margin-top: 80rpx;
+	height: calc(100vh - 90rpx);
+	.swiper-item,
+	.scroll-view {
+		height: 100%;
+	}
 }
 </style>

@@ -1,23 +1,15 @@
 <template>
-	<view class="">
-		<view class="list hairline-border" v-for="(item, index) in arr" :key="index">
-			<view class="preview">
-				<image v-if="type == 1" :src="item.data.cover.homepage" lazy-load mode=""></image>
-				<image v-if="type == 2" :src="item.data.content.data.cover.homepage" lazy-load mode=""></image>
-				<text v-if="type == 1" class="duration">{{ item.data.duration | formatTime }}</text>
-				<text v-if="type == 2" class="duration">{{ item.data.content.data.duration | formatTime }}</text>
-			</view>
-			<view class="text-content flex">
-				<view class="auth">
-					<image v-if="type == 1" class="avatar" :src="item.data.author.icon" mode=""></image>
-					<image v-if="type == 2" class="avatar" :src="item.data.content.data.author.icon" mode=""></image>
-				</view>
-				<view class="info">
-					<view v-if="type == 1" class="title">{{ item.data.title }}</view>
-					<view v-if="type == 2" class="title">{{ item.data.content.data.title }}</view>
-					<view v-if="type == 1" class="tags">{{item.data.author.name}} / {{ item.data.category }}</view>
-					<view v-if="type == 2" class="tags">{{ item.data.header.description }}</view>
-				</view>
+	<view class="hairline-border list-item">
+		<view class="preview">
+			<image lazy-load :src="bg" mode=""></image>
+			<text class="duration" v-if="duration">{{ duration | formatTime }}</text>
+			<text class="label" v-if="label">{{ label }}</text>
+		</view>
+		<view class="info flex">
+			<view class="auth"><image v-if="avatar" class="avatar" lazy-load :src="avatar" mode=""></image></view>
+			<view class="text-content flex-1">
+				<view class="title" v-if="title">{{ title }}</view>
+				<view class="description" v-if="description">{{ description }}</view>
 			</view>
 		</view>
 	</view>
@@ -30,16 +22,12 @@ export default {
 	},
 
 	props: {
-		arr: {
-			type: Array,
-			default() {
-				return [];
-			}
-		},
-		type: {
-			type: [Number, String],
-			default: 1
-		}
+		bg: String,
+		duration: Number,
+		avatar: String,
+		title: String,
+		description: String,
+		label: String //广告商标
 	},
 	filters: {
 		formatTime(value) {
@@ -52,7 +40,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.list {
+.list-item {
 	padding: 20rpx 0;
 	&:after {
 		border-bottom: 1rpx solid #ededed;
@@ -81,8 +69,19 @@ export default {
 		bottom: 10rpx;
 		right: 20rpx;
 	}
+	.label {
+		color: #ffffff;
+		position: absolute;
+		right: 20rpx;
+		top: 20rpx;
+		border-radius: 4rpx;
+		font-size: 24rpx;
+		padding: 2rpx 4rpx;
+		border: 1rpx solid rgba(2555, 255, 255, 0.2);
+		background-color: rgba(0, 0, 0, 0.1);
+	}
 }
-.text-content {
+.info {
 	// padding: 20rpx 0;
 	.avatar {
 		height: 80rpx;
@@ -90,15 +89,13 @@ export default {
 		border-radius: 50%;
 		margin-right: 20rpx;
 	}
-	.info {
-		.title {
-			font-weight: bold;
-			font-size: 28rpx;
-		}
-		.tags {
-			font-size: 24rpx;
-			color: #888888;
-		}
+	.title {
+		font-weight: bold;
+		font-size: 28rpx;
+	}
+	.description {
+		font-size: 24rpx;
+		color: #888888;
 	}
 }
 </style>
