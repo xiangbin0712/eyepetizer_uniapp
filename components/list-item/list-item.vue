@@ -1,19 +1,21 @@
 <template>
-	<view class="item-list">
-		<!-- <view class="section">
-			<view class="preview">
-				<image lazy-load :src="bg" mode=""></image>
-				<text class="duration" v-if="duration">{{ duration | formatTime }}</text>
-				<text class="label" v-if="label">{{ label }}</text>
+	<view class="list-item">
+		<!-- type followCard -->
+		<view class="section" :class="type" v-if="type === 'followCard'">
+			<view class="preview border-radio-10" :style="{ backgroundImage: `url(${bg})` }">
+				<text class="duration text-bold text-white">{{ duration | formatTime }}</text>
 			</view>
 			<view class="info flex">
-				<view class="auth"><image v-if="avatar" class="avatar" lazy-load :src="avatar" mode=""></image></view>
-				<view class="text-content flex-1">
-					<view class="title" v-if="title">{{ title }}</view>
-					<view class="description" v-if="description">{{ description }}</view>
+				<view class="left flex flex-1">
+					<image class="avatar border-radio-round" :src="avatar" mode=""></image>
+					<view class="text-container flex-col">
+						<text class="title text-over-one  text-bold">{{ title }}</text>
+						<text class="description">{{ description }}</text>
+					</view>
 				</view>
+				<text class="share">share</text>
 			</view>
-		</view> -->
+		</view>
 
 		<!-- type  videoSmallCard -->
 		<view v-if="type === 'videoSmallCard'" class="section flex" :class="type">
@@ -36,12 +38,12 @@
 		<view v-if="type === 'briefCard'" class="section flex" :class="type">
 			<view class="left flex flex-1">
 				<image :src="bg" lazy-load mode=""></image>
-				<view class="text-content flex-col">
+				<view class="text-content flex-col flex-1">
 					<text class="title">{{ title }}</text>
 					<text class="description">{{ description }}</text>
 				</view>
 			</view>
-			<text class="focus-btn hairline-border">+关注</text>
+			<text v-if="showBtn" class="focus-btn hairline-border">+关注</text>
 		</view>
 	</view>
 </template>
@@ -64,7 +66,8 @@ export default {
 		type: {
 			type: String,
 			required: true
-		}
+		},
+		showBtn: Boolean
 	},
 	filters: {
 		formatTime(value) {
@@ -77,67 +80,53 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .list-item {
-// 	padding: 20rpx 0;
-// 	&:after {
-// 		border-bottom: 1rpx solid #ededed;
-// 	}
-// }
+.list-item {
+	padding: 20rpx 0;
+	// border: 1px solid red;
+	// &:after {
+	// 	border-bottom: 1rpx solid #ededed;
+	// }
+}
 
-// .preview {
-// 	position: relative;
-// 	height: 380rpx;
-// 	margin-bottom: 20rpx;
-// 	width: 100%;
-// 	image {
-// 		position: absolute;
-// 		height: 100%;
-// 		width: 100%;
-// 		border-radius: 10rpx;
-// 	}
-// 	.duration {
-// 		position: absolute;
-// 		color: #ffffff;
-// 		font-weight: bold;
-// 		background-color: rgba(0, 0, 0, 0.5);
-// 		border-radius: 4rpx;
-// 		font-size: 24rpx;
-// 		padding: 2rpx 4rpx;
-// 		bottom: 10rpx;
-// 		right: 20rpx;
-// 	}
-// 	.label {
-// 		color: #ffffff;
-// 		position: absolute;
-// 		right: 20rpx;
-// 		top: 20rpx;
-// 		border-radius: 4rpx;
-// 		font-size: 24rpx;
-// 		padding: 2rpx 4rpx;
-// 		border: 1rpx solid rgba(2555, 255, 255, 0.2);
-// 		background-color: rgba(0, 0, 0, 0.1);
-// 	}
-// }
-// .info {
-// 	.avatar {
-// 		height: 80rpx;
-// 		width: 80rpx;
-// 		border-radius: 50%;
-// 		margin-right: 20rpx;
-// 	}
-// 	.title {
-// 		font-weight: bold;
-// 		font-size: 28rpx;
-// 	}
-// 	.description {
-// 		font-size: 24rpx;
-// 		color: #888888;
-// 	}
-// }
+// followCard
+.followCard {
+	.preview {
+		height: 380rpx;
+		background-size: 100%;
+		position: relative;
+		.duration {
+			position: absolute;
+			bottom: 20rpx;
+			right: 20rpx;
+			font-size: 24rpx;
+			background-color: rgba(0, 0, 0, 0.5);
+			padding: 4rpx 10rpx;
+			border-radius: 4rpx;
+		}
+	}
+	.share {
+		margin-left: 20rpx;
+	}
+	.info {
+		padding: 20rpx 0;
+		.avatar {
+			height: 80rpx;
+			width: 80rpx;
+			margin-right: 20rpx;
+		}
+		.title {
+			font-size: 28rpx;
+			// border: 1px solid red;
+		}
+		.description {
+			font-size: 24rpx;
+			color: #888888;
+		}
+	}
+}
 
 // videoSmallCard
 .videoSmallCard {
-	// border: 1px solid red;
 	.preview {
 		background-size: 100%;
 		border-radius: 10rpx;

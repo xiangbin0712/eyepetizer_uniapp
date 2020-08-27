@@ -21,7 +21,7 @@
 			</swiper-item>
 			<!-- 推荐 -->
 			<swiper-item class="swiper-item">
-				<scroll-view class="scroll-view" scroll-y="true"><home-recommend></home-recommend></scroll-view>
+				<scroll-view class="scroll-view" scroll-y="true"><home-recommend :obj="tuijianData"></home-recommend></scroll-view>
 			</swiper-item>
 			<!-- 日报 -->
 			<swiper-item class="swiper-item">
@@ -58,10 +58,10 @@ export default {
 	},
 	data() {
 		return {
-			current: 0,
-			findData: [],
-			tuijianData: [],
-			feedData: [],
+			current: 1,
+			findData: {},
+			tuijianData: {},
+			feedData: {},
 			list: [
 				{
 					name: '发现'
@@ -90,12 +90,17 @@ export default {
 					return this.getFeed();
 			}
 		},
-
-		getTuiJian() {},
 		async getFind() {
 			console.log('find');
 			let res = await this.$u.get('v7/index/tab/discovery');
 			this.findData = res;
+		},
+		async getTuiJian() {
+			console.log('tuijian');
+			let res = await this.$u.get('v5/index/tab/allRec', {
+				page: 0
+			});
+			this.tuijianData = res;
 		},
 		getFeed() {},
 

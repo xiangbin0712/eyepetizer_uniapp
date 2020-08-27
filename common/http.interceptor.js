@@ -20,7 +20,8 @@ const install = (Vue, vm) => {
 
 	// 请求拦截，配置Token等参数
 	Vue.prototype.$u.http.interceptor.request = (config) => {
-		config.data.udid = "2bc07e33a6d845e28af9e2f21a51f17e77e49885"
+		// config.data.udid = "2bc07e33a6d845e28af9e2f21a51f17e77e49885"
+		config.data.udid = "f4007ffeb2e60ff2"
 		config.data.vc = "6030071"
 		config.data.vn = "6.3.7"
 		config.data.size = "1080X2029"

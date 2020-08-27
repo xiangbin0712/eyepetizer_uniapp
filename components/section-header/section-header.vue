@@ -1,5 +1,5 @@
 <template>
-	<view class="header">
+	<view class="header" >
 		<text class="left-text">{{ leftText }}</text>
 		<text class="right-text" v-if="rightText">{{ rightText }}</text>
 	</view>
@@ -12,7 +12,9 @@ export default {
 	},
 	props: {
 		leftText: String,
-		rightText: String
+		rightText: String,
+	},
+	computed: {
 	}
 };
 </script>

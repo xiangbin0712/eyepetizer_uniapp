@@ -77,6 +77,13 @@ image {
 	text-align: right;
 }
 
+// 文字显示一行
+.text-over-one {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 //  文字 三行
 .text-over-three {
 	display: -webkit-box;

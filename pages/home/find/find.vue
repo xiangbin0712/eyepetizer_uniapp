@@ -73,15 +73,7 @@ export default {
 	},
 
 	data() {
-		return {
-			banner: [],
-			campaign: [], //专题策划
-			tagBriefCard: [], //推荐主题
-			weekRankList: [], // 本周榜单
-			marginLeft: 20,
-			scrollLeft: null,
-			marginRight: 0
-		};
+		return {};
 	},
 	computed: {
 		categoryList() {
@@ -100,7 +92,6 @@ export default {
 
 	methods: {
 		onClick(params) {
-			// console.log(params)
 			uni.navigateTo({
 				url: '../tag/tag'
 			});
@@ -119,7 +110,6 @@ export default {
 	margin: 0 30rpx;
 }
 .section {
-	padding: 20rpx 0;
 	&.hairline-border:after {
 		border-bottom: 1px solid #ededed;
 	}
@@ -147,6 +137,7 @@ export default {
 // 专题策划
 .cehua {
 	flex-wrap: wrap;
+	padding: 20rpx 0;
 	justify-content: space-between;
 	.preview {
 		background-size: 100%;
@@ -171,10 +162,12 @@ export default {
 // 开眼专栏
 .zhuanlan {
 	height: 400rpx;
+	padding: 20rpx 0;
 }
 
 // 本周榜单
-.videoSmallCard {}
+.videoSmallCard {
+}
 // 推荐主题
 .briefCard {
 	&.hairline-border:after {
