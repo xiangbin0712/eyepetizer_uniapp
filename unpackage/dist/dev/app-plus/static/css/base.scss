@@ -4,9 +4,9 @@
 
 image {
 	height: 100%;
+	width: 100%;
 	display: block;
 }
-
 
 /* start--Retina 屏幕下的 1px 边框--start */
 .hairline-border,
@@ -15,7 +15,7 @@ image {
 .hairline-border-right,
 .hairline-border-top,
 .hairline-border-top-bottom {
-	position: relative
+	position: relative;
 }
 
 .hairline-border-bottom:after,
@@ -43,27 +43,27 @@ image {
 }
 
 .hairline-border-top:after {
-	border-top-width: 1px
+	border-top-width: 1px;
 }
 
 .hairline-border-left:after {
-	border-left-width: 1px
+	border-left-width: 1px;
 }
 
 .hairline-border-right:after {
-	border-right-width: 1px
+	border-right-width: 1px;
 }
 
 .hairline-border-bottom:after {
-	border-bottom-width: 1px
+	border-bottom-width: 1px;
 }
 
 .hairline-border-top-bottom:after {
-	border-width: 1px 0
+	border-width: 1px 0;
 }
 
 .hairline-border:after {
-	border-width: 1px
+	border-width: 1px;
 }
 /* end--Retina 屏幕下的 1px 边框--end */
 // text
@@ -79,18 +79,33 @@ image {
 
 //  文字 三行
 .text-over-three {
-    display: -webkit-box;
-    overflow: hidden;
-    white-space: normal !important;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical
+	display: -webkit-box;
+	overflow: hidden;
+	white-space: normal !important;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
 }
 
 // font
 .font-30 {
 	font-size: 30rpx;
+}
+
+.text-bold {
+	font-weight: bold;
+}
+
+.text-white {
+	color: #ffffff;
+}
+
+.border-radio-round {
+	border-radius: 50%;
+}
+.border-radio-10 {
+	border-radius: 10rpx;
 }
 
 // flex

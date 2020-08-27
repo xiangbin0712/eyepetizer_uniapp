@@ -17,7 +17,7 @@
 		<swiper class="swiper" :current="current" @change="swiperChange">
 			<!-- 发现 -->
 			<swiper-item class="swiper-item">
-				<scroll-view class="scroll-view" scroll-y="true"><home-Find></home-Find></scroll-view>
+				<scroll-view class="scroll-view" scroll-y="true"><home-Find :obj="findData"></home-Find></scroll-view>
 			</swiper-item>
 			<!-- 推荐 -->
 			<swiper-item class="swiper-item">
@@ -58,7 +58,10 @@ export default {
 	},
 	data() {
 		return {
-			current: 1,
+			current: 0,
+			findData: [],
+			tuijianData: [],
+			feedData: [],
 			list: [
 				{
 					name: '发现'
@@ -72,8 +75,30 @@ export default {
 			]
 		};
 	},
+	onLoad() {
+		this.init();
+	},
 
 	methods: {
+		init() {
+			switch (this.current) {
+				case 0:
+					return this.getFind();
+				case 1:
+					return this.getTuiJian();
+				case 2:
+					return this.getFeed();
+			}
+		},
+
+		getTuiJian() {},
+		async getFind() {
+			console.log('find');
+			let res = await this.$u.get('v7/index/tab/discovery');
+			this.findData = res;
+		},
+		getFeed() {},
+
 		tabsChange(index) {
 			this.current = index;
 		},

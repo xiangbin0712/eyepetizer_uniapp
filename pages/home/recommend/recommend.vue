@@ -2,23 +2,23 @@
 	<view class="recommend">
 		<block v-for="(items, i) in arr" :key="i">
 			<section-header v-if="items.type === 'textCard'" :leftText="items.data.text" :rightText="items.data.rightText"></section-header>
-			<list-item
+		<!-- 	<list-item
 				v-if="items.type === 'followCard'"
 				:title="items.data.header.title"
 				:avatar="items.data.header.icon"
 				:bg="items.data.content.data.cover.homepage"
 				:duration="items.data.content.data.duration"
 				:description="items.data.header.description"
-			></list-item>
+			></list-item> -->
 			<!-- type:banenr3 dataType:Banner -->
-			<list-item
+	<!-- 		<list-item
 				v-if="items.data.dataType === 'Banner'"
 				:title="items.data.header.title"
 				:avatar="items.data.header.icon"
 				:bg="items.data.image"
 				:label="items.data.label.text"
 				:description="items.data.header.description"
-			></list-item>
+			></list-item> -->
 			<!-- 今日开眼资讯  后续封装成组件 -->
 			<view class="information-card" v-if="items.type === 'informationCard'">
 				<image :src="items.data.backgroundImage" lazy-load mode=""></image>

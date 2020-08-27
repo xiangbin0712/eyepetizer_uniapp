@@ -70,7 +70,10 @@ const store = new Vuex.Store({
 				pagePath: "/pages/my/index/index",
 				text: "我的"
 			}
-		]
+		],
+
+		navigationBarHeight: 1
+
 	},
 	mutations: {
 		$uStore(state, payload) {

@@ -29,7 +29,8 @@ export default {
 	},
 	props: {
 		title: String,
-		default: ''
+		default: '',
+		placeholder: Boolean
 	},
 	data() {
 		return {

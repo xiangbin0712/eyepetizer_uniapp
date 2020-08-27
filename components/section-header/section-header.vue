@@ -27,11 +27,11 @@ export default {
 
 	.left-text {
 		font-size: 40rpx;
-		color: #3a3a3a;
+		color: #3c3c3c;
 	}
 	.right-text {
 		padding: 20rpx 0 0 20rpx;
-		color: #4b85f2;
+		color: #6d9ec6;
 		margin-bottom: -10rpx;
 	}
 }

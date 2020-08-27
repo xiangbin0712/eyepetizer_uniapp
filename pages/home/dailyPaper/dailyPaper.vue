@@ -2,14 +2,14 @@
 	<view class="daily-paper">
 		<view class="section" v-for="(items, i) in arr" :key="i">
 			<section-header v-if="items.type === 'textCard'" :leftText="items.data.text" :rightText="items.data.rightText"></section-header>
-			<list-item
+			<!-- <list-item
 				v-if="items.type === 'followCard'"
 				:title="items.data.header.title"
 				:avatar="items.data.header.icon"
 				:bg="items.data.content.data.cover.homepage"
 				:duration="items.data.content.data.duration"
 				:description="items.data.header.description"
-			></list-item>
+			></list-item> -->
 		</view>
 		<!-- <u-loadmore :status="status" /> -->
 	</view>
