@@ -1,3 +1,4 @@
+@import '/static/font/iconfont.css';
 .container {
 	margin: 0 30rpx;
 }
@@ -105,7 +106,7 @@ image {
 }
 
 .text-white {
-	color: #ffffff;
+	color: #ffffff !important;
 }
 
 .border-radio-round {

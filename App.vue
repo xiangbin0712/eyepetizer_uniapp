@@ -1,9 +1,25 @@
 <script>
+import systemMixin from '@/mypUI/myp-mixin/systemMixin.js';
 export default {
+	globalData: {
+		currentTab: 0
+	},
+	mixins: [systemMixin],
 	onLaunch: function() {
 		console.log('App Launch');
+		// #ifdef APP-PLUS || H5
+		this.mypInitSystemInfo();
+		// #endif
+		// #ifndef APP-PLUS || H5
+		setTimeout(() => {
+			this.mypInitSystemInfo();
+		}, 0);
+		// #endif
+		// #ifdef APP-PLUS
+		plus.screen.lockOrientation('portrait-primary'); //锁定屏幕
+		// #endif
 
-		// this.init();
+		this.init();
 		this.getSysInfo();
 	},
 	onShow: function() {
@@ -38,5 +54,13 @@ export default {
 
 <style lang="scss">
 /* 注意要写在第一行，同时给style标签加入lang="scss"属性 */
+/* #ifdef APP-NVUE */
+@import '@/mypUI/base.scss';
+// /* #endif */
+
+/* #ifdef APP-PLUS */
 @import 'uview-ui/index.scss';
+@import 'uview-ui/theme.scss';
+@import './static/css/base.scss';
+/* #endif */
 </style>

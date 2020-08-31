@@ -10,14 +10,21 @@
 					v-if="(items.type === 'specialSquareCardCollection' || 'columnCardList') && items.data.header"
 					:leftText="items.data.header.title"
 					:rightText="items.data.header.rightText"
+					:actionUrl="items.data.header.actionUrl"
 				></section-header>
 				<section-header v-if="items.type === 'textCard'" :leftText="items.data.text" :rightText="items.data.rightText"></section-header>
 			</view>
 			<!-- 热门分类 -->
 			<view class="section hot-category" v-if="items.type === 'specialSquareCardCollection'">
 				<scroll-view class="scroll-view" scroll-x="true">
-					<view class="scroll-view-item" v-for="(item, index) in categoryList" :key="index">
-						<view class="box border-radio-10 flex-center" :style="{ backgroundImage: `url(${box.data.image})` }" v-for="(box, i) in categoryList[index]" :key="i">
+					<view class="box-container">
+						<view
+							class="box border-radio-10 flex-center"
+							@click="goTag(box)"
+							:style="{ backgroundImage: `url(${box.data.image})` }"
+							v-for="(box, i) in items.data.itemList"
+							:key="i"
+						>
 							<text class="text text-bold text-white">{{ box.data.title }}</text>
 						</view>
 					</view>
@@ -43,6 +50,7 @@
 				:bg="items.data.cover.feed"
 				:title="items.data.title"
 				description=""
+				:id="items.data.id"
 			></list-item>
 
 			<!-- 推荐主题 -->
@@ -91,9 +99,10 @@ export default {
 	},
 
 	methods: {
-		onClick(params) {
+		goTag(params) {
+			let id = params.data.id;
 			uni.navigateTo({
-				url: '../tag/tag'
+				url: `../tag/tag?id=${id}`
 			});
 		}
 	}
@@ -115,20 +124,20 @@ export default {
 	}
 }
 .hot-category {
+	margin-top: 20rpx;
 	.scroll-view {
 		transition: all 0.3s;
-		overflow: hidden;
 		white-space: nowrap;
-		.scroll-view-item {
-			display: inline-flex;
-			flex-wrap: wrap;
-			width: 680rpx;
+		overflow: hidden;
+		.box-container {
+			display: inline-grid;
+			grid-auto-flow: column;
+			grid-template-columns: repeat(8, 200rpx);
+			grid-template-rows: repeat(2, 200rpx);
+			grid-column-gap: 10rpx;
+			grid-row-gap: 10rpx;
 			.box {
-				height: 220rpx;
-				width: 220rpx;
 				background-size: 100%;
-				margin-right: 6rpx;
-				margin-bottom: 6rpx;
 			}
 		}
 	}

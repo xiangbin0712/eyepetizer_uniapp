@@ -24,7 +24,7 @@
 								<image class="avatar" :src="item.data.header.icon" mode=""></image>
 								<text class="issuerName">{{ item.data.header.issuerName }}</text>
 							</view>
-							<view class="like">{{ item.data.content.data.consumption.collectionCount }}</view>
+							<view class="like" style="font-size: 24rpx;">{{ item.data.content.data.consumption.collectionCount }}</view>
 						</view>
 					</view>
 				</template>
@@ -37,7 +37,7 @@
 								<image class="avatar" :src="item.data.header.icon" mode=""></image>
 								<text class="issuerName">{{ item.data.header.issuerName }}</text>
 							</view>
-							<view class="like">{{ item.data.content.data.consumption.collectionCount }}</view>
+							<view class="like" style="font-size: 24rpx;">{{ item.data.content.data.consumption.collectionCount }}</view>
 						</view>
 					</view>
 				</template>

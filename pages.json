@@ -1,9 +1,13 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+
 		{ // 首页
 			"path": "pages/home/index/index"
 		},
-
+		{
+			"path": "pages/demo/demo",
+			"style": {}
+		},
 		{
 			// tag
 			"path": "pages/home/tag/tag",
@@ -29,6 +33,12 @@
 				}
 			}
 		},
+
+		{
+			"path": "pages/common/play-page/play-page",
+			"style": {}
+		},
+
 
 		{
 			"path": "pages/home/rank-list/rank-list",
@@ -81,7 +91,6 @@
 			"path": "pages/initiate/initiate",
 			"style": {}
 		}
-
 
 	],
 	"easycom": {

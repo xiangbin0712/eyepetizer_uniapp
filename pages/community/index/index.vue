@@ -24,8 +24,7 @@
 				<scroll-view class="scroll-view" scroll-y="true"><community-focus></community-focus></scroll-view>
 			</swiper-item>
 		</swiper>
-		<!-- <u-tabbar :list="vuex_tabbar"></u-tabbar -->
-		<c-tabbar :list="vuex_tabbar"></c-tabbar>
+		<u-tabbar  :list="vuex_tabbar" midButton></u-tabbar>
 	</view>
 </template>
 
@@ -69,12 +68,6 @@ export default {
 .swiper,
 .swiper-item,
 .scroll-view {
-	height: calc(100vh - 90rpx - var(--status-bar-height) - 90rpx);
-}
-
-.list {
-	height: 50px;
-	border: 1px solid;
-	text-align: center;
+	height: calc(100vh - 50px - 90rpx - var(--status-bar-height));
 }
 </style>

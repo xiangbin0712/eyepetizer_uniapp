@@ -34,11 +34,12 @@
 					class="scroll-view"
 					scroll-y="true"
 				>
-					<home-dailyPaper ref="feed"></home-dailyPaper>
+					<home-dailyPaper :obj="feedData" ref="feed"></home-dailyPaper>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
-		<c-tabbar :list="vuex_tabbar"></c-tabbar>
+		<!-- <c-tabbar :list="vuex_tabbar" :current="0"></c-tabbar> -->
+		<u-tabbar :list="vuex_tabbar" midButton></u-tabbar>
 	</view>
 </template>
 
@@ -58,10 +59,10 @@ export default {
 	},
 	data() {
 		return {
-			current: 1,
-			findData: {},
-			tuijianData: {},
-			feedData: {},
+			current: 0,
+			findData: null,
+			tuijianData: null,
+			feedData: null,
 			list: [
 				{
 					name: '发现'
@@ -77,6 +78,23 @@ export default {
 	},
 	onLoad() {
 		this.init();
+	},
+	watch: {
+		current(old) {
+			switch (old) {
+				case 0:
+					!this.findData ? this.getFind() : '';
+					break;
+				case 1:
+					!this.tuijianData ? this.getTuiJian() : '';
+					break;
+				case 2:
+					!this.feedData ? this.getFeed() : '';
+					break;
+			}
+		}
+	},
+	computed: {
 	},
 
 	methods: {
@@ -102,7 +120,11 @@ export default {
 			});
 			this.tuijianData = res;
 		},
-		getFeed() {},
+		async getFeed() {
+			console.log('tuijian');
+			let res = await this.$u.get('v5/index/tab/feed');
+			this.feedData = res;
+		},
 
 		tabsChange(index) {
 			this.current = index;
@@ -111,9 +133,7 @@ export default {
 			this.current = e.detail.current;
 		},
 		// 底部刷新
-		scrolltolower(e) {
-			this.$refs.feed.upData();
-		},
+		scrolltolower(e) {},
 		onRefresh() {
 			console.log('xiala');
 		},
@@ -125,20 +145,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.swiper,
+.swiper {
+	height: calc(100vh - 50px - 90rpx - var(--status-bar-height));
+}
 .swiper-item,
 .scroll-view {
-	height: calc(100vh - 90rpx - var(--status-bar-height) - 90rpx);
-}
-
-.list {
-	height: 50px;
-	border: 1px solid;
-	text-align: center;
-}
-
-.scrollview {
-	height: 100vh;
-	border: 1px solid;
+	height: 100%;
 }
 </style>

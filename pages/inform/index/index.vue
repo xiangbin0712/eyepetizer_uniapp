@@ -28,8 +28,8 @@
 				<scroll-view class="scroll-view" scroll-y="true"><inform-interaction></inform-interaction></scroll-view>
 			</swiper-item>
 		</swiper>
-		<!-- <u-tabbar :list="vuex_tabbar" :mid-button="true"></u-tabbar> -->
-		<c-tabbar :list="vuex_tabbar"></c-tabbar>
+		<!-- <c-tabbar :list="vuex_tabbar"></c-tabbar> -->
+		<u-tabbar :list="vuex_tabbar" midButton></u-tabbar>
 	</view>
 </template>
 
@@ -78,6 +78,6 @@ export default {
 .swiper,
 .swiper-item,
 .scroll-view {
-	height: calc(100vh - 90rpx - 80rpx - var(--status-bar-height));
+	height: calc(100vh - 50px - 100rpx - var(--status-bar-height));
 }
 </style>

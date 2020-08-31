@@ -1,7 +1,7 @@
 <template>
-	<view class="header" >
+	<view class="header">
 		<text class="left-text">{{ leftText }}</text>
-		<text class="right-text" v-if="rightText">{{ rightText }}</text>
+		<text class="right-text" @click="goMore" v-if="rightText">{{ rightText }}</text>
 	</view>
 </template>
 
@@ -13,8 +13,25 @@ export default {
 	props: {
 		leftText: String,
 		rightText: String,
+		actionUrl: String
 	},
-	computed: {
+	methods: {
+		goMore() {
+			if (!this.actionUrl) return;
+			let action = this.actionUrl.split('//')[1].split('/')[0];
+				console.log(action)
+			switch (action) {
+				case 'categories':
+					this._navigateTo('/pages/home/categories-all/categories-all');
+					break;
+			}
+		},
+
+		_navigateTo(url) {
+			uni.navigateTo({
+				url
+			});
+		}
 	}
 };
 </script>

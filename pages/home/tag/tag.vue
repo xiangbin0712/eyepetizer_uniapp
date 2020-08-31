@@ -33,20 +33,45 @@
 		<swiper class="swiper" :current="defaultIdx" @change="swiperChange">
 			<!-- 推荐 -->
 			<swiper-item class="swiper-item">
-				<scroll-view class="scroll-view" scroll-y="true">
-					<block v-for="(item, i) in tuijian.itemList" :key="i" v-if="tuijian">
-						<!-- {{item.data.header}} -->
-						<section-header :leftText="item.data.text"></section-header>
-						<list-item
-							v-if="item.type === 'followCard' && item.data.dataType === 'FollowCard'"
-							:title="item.data.header.title"
-							:avatar="item.data.header.icon"
-							:bg="item.data.content.data.cover.feed"
-							:duration="item.data.duration"
-							:description="item.data.content.data.author.name + item.data.content.data.category"
-						></list-item>
-					</block>
-				</scroll-view>
+				<!-- <scroll-view class="scroll-view" scroll-y="true"> -->
+				<block v-for="(items, i) in tuijian.itemList" :key="i" v-if="tuijian">
+					<section-header v-if="items.type === 'textCard'" :leftText="items.data.text"></section-header>
+					<!-- followCard -->
+					<list-item
+						v-if="items.type === 'followCard'"
+						:type="items.type"
+						:title="items.data.header.title"
+						:bg="items.data.content.data.cover.feed"
+						:avatar="items.data.content.data.author.icon"
+						:duration="items.data.content.data.duration"
+						:description="items.data.header.description"
+					></list-item>
+					<!-- videoSmallCard -->
+					<list-item
+						v-if="items.type === 'videoSmallCard'"
+						:type="items.type"
+						:title="items.data.title"
+						:bg="items.data.cover.feed"
+						:category="items.data.category"
+						:duration="items.data.duration"
+					></list-item>
+
+					<!-- autoPlayFollowCard -->
+					<list-item
+						v-if="items.type === 'autoPlayFollowCard'"
+						:type="items.type"
+						:title="items.data.content.data.title"
+						:bg="items.data.content.data.cover.feed"
+						:playUrl="items.data.content.data.playUrl"
+						:issuerName="items.data.header.issuerName"
+						:description="items.data.content.data.description"
+						:time="items.data.header.time"
+						:avatar="items.data.content.data.author.icon"
+						:tags="items.data.content.data.tags"
+						:consumption="items.data.content.data.consumption"
+					></list-item>
+				</block>
+				<!-- </scroll-view> -->
 			</swiper-item>
 			<!-- 广场 -->
 			<swiper-item class="swiper-item"><scroll-view class="scroll-view" scroll-y="true">1</scroll-view></swiper-item>
@@ -69,36 +94,43 @@ export default {
 			tabList: [],
 			defaultIdx: 0,
 			tagInfo: {},
+			id: null,
 			tuijian: {},
 			guangchang: {}
 		};
 	},
-	onLoad() {
-		this.init();
+	onLoad(options) {
+		if (options.id) {
+			this.id = options.id;
+			this.init();
+		}
 	},
 	methods: {
 		async init() {
 			this.getTagInfo();
-			this.getTuiJian();
-			this.getGuangChang();
+			// this.getTuiJian();
+			// this.getGuangChang();
 		},
 		async getTagInfo() {
 			let res = await this.$u.get('v6/tag/index', {
-				id: 16
+				id: this.id
 			});
 			this.tagInfo = res.tagInfo;
 			this.tabList = res.tabInfo.tabList;
-			this.defaultIdx = rs.tabInfo.defaultIdx;
+			this.defaultIdx = res.tabInfo.defaultIdx;
+			this.getTuiJian();
+			this.getGuangChang();
 		},
 		async getTuiJian() {
 			let res = await this.$u.get('v1/tag/videos', {
-				id: 16
+				id: this.id
 			});
+			console.log(res,"tuijian")
 			this.tuijian = res;
 		},
 		async getGuangChang() {
 			let res = await this.$u.get('v6/tag/dynamics', {
-				id: 16
+				id: this.id
 			});
 			this.guangchang = res;
 		},
@@ -159,6 +191,7 @@ export default {
 	.swiper-item,
 	.scroll-view {
 		height: 100%;
+		overflow: auto;
 	}
 }
 </style>

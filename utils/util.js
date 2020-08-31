@@ -38,6 +38,28 @@ function getDateTimeBefor(publishtime) {
 	return Math.floor(years) + "年前";
 }
 
+function addZero(m) {
+	return m < 10 ? '0' + m : m
+}
+
+function timeConvert(timestamp, type) {
+	//timestamp是整数，否则要parseInt转换
+	var time = new Date(timestamp);
+	var y = addZero(time.getFullYear())
+	var m = addZero(time.getMonth() + 1)
+	var d = addZero(time.getDate())
+	var h = addZero(time.getHours())
+	var m = addZero(time.getMinutes())
+	var s = addZero(time.getSeconds())
+	switch (type) {
+		case 'y/m/d':
+			return `${y}/${m}/${d}`
+		case 'h:m':
+			return `${h}:${m}`
+	}
+}
+
 export {
-	getDateTimeBefor
+	getDateTimeBefor,
+	timeConvert
 }

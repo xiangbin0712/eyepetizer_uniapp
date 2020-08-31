@@ -18,12 +18,16 @@
 			<swiper-item class="swiper-item">
 				<scroll-view class="scroll-view" scroll-y="true" @scrolltolower="onLower">
 					<block v-if="obj.week" v-for="(item, i) in obj.week" :key="i">
+						<!-- <block v-for="(item, i) in demo" :key="i"> -->
 						<list-item
+							v-if="item.type === 'video'"
+							:type="item.type"
 							:title="item.data.title"
 							:avatar="item.data.author.icon"
-							:bg="item.data.cover.homepage"
+							:bg="item.data.cover.feed"
 							:duration="item.data.duration"
-							:description="item.data.author.name + item.data.category"
+							:name="item.data.author.name"
+							:category="item.data.category"
 						></list-item>
 					</block>
 				</scroll-view>
@@ -32,11 +36,14 @@
 				<scroll-view class="scroll-view" scroll-y="true">
 					<block v-if="obj.month" v-for="(item, i) in obj.month" :key="i">
 						<list-item
+							v-if="item.type === 'video'"
+							:type="item.type"
 							:title="item.data.title"
 							:avatar="item.data.author.icon"
-							:bg="item.data.cover.homepage"
+							:bg="item.data.cover.feed"
 							:duration="item.data.duration"
-							:description="item.data.author.name + item.data.category"
+							:name="item.data.author.name"
+							:category="item.data.category"
 						></list-item>
 					</block>
 				</scroll-view>
@@ -45,11 +52,14 @@
 				<scroll-view class="scroll-view" scroll-y="true">
 					<block v-if="obj.historical" v-for="(item, i) in obj.historical" :key="i">
 						<list-item
+							v-if="item.type === 'video'"
+							:type="item.type"
 							:title="item.data.title"
 							:avatar="item.data.author.icon"
 							:bg="item.data.cover.feed"
 							:duration="item.data.duration"
-							:description="item.data.author.name + item.data.category"
+							:name="item.data.author.name"
+							:category="item.data.category"
 						></list-item>
 					</block>
 				</scroll-view>
@@ -69,6 +79,7 @@ export default {
 			defaultIdx: 0,
 			tabList: [],
 			obj: {},
+			demo: [],
 			count: 10,
 			textList: ['week', 'month', 'historical']
 		};
@@ -87,13 +98,27 @@ export default {
 		},
 
 		// 获取列表
-		async getRankList() {
+		getRankList() {
 			let defaultIdx = this.defaultIdx;
 			let url = this.tabList[defaultIdx].apiUrl;
-			let res = await this.$u.get(url);
 			let key = this.textList[defaultIdx];
+			uni.request({
+				url: url,
+				success: res => {
+					this.$set(this.obj, key, res.data.itemList);
+					// this.$set(this.obj, key, res.itemList);
+					// this.obj.week = res.itemList;
+					// this.demo = res.data.itemList;
+				}
+			});
+
+			// let res = await this.$u.get(url);
+			// this.demo = res.itemList;
+			return;
+			// let key = this.textList[defaultIdx];
 			if (res && res.itemList) {
-				this.$set(this.obj, key, res.itemList);
+				// this.$set(this.obj, key, res.itemList);
+				// this.obj.week = res.itemList;
 			}
 		},
 
@@ -115,7 +140,6 @@ export default {
 			if (defaultIdx == 0) this.obj.historical = [];
 			if (defaultIdx == 2) this.obj.week = [];
 		},
-		
 
 		// 触底
 		// @todo 加锁

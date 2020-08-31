@@ -1,15 +1,16 @@
 <template>
 	<view class="daily-paper">
-		<view class="section" v-for="(items, i) in arr" :key="i">
-			<section-header v-if="items.type === 'textCard'" :leftText="items.data.text" :rightText="items.data.rightText"></section-header>
-			<!-- <list-item
+		<view class="section" v-for="(items, i) in obj.itemList" :key="i">
+			<section-header v-if="items.type === 'textCard'" :leftText="items.data.text" :rightText="items.data.subTitle"></section-header>
+			<list-item
 				v-if="items.type === 'followCard'"
+				:type="items.type"
 				:title="items.data.header.title"
 				:avatar="items.data.header.icon"
 				:bg="items.data.content.data.cover.homepage"
 				:duration="items.data.content.data.duration"
 				:description="items.data.header.description"
-			></list-item> -->
+			></list-item>
 		</view>
 		<!-- <u-loadmore :status="status" /> -->
 	</view>
@@ -23,38 +24,16 @@ export default {
 		ListItem,
 		SectionHeader
 	},
+	props: {
+		obj: {}
+	},
 	data() {
-		return {
-			arr: [],
-			nextPageUrl: '',
-			status: 'loading '
-		};
+		return {};
 	},
 
-	mounted() {
-		this.getData();
-	},
+	mounted() {},
 
-	methods: {
-		async getData() {
-			// let url = 'v5/index/tab/feed?udid=2bc07e33a6d845e28af9e2f21a51f17e77e49885&vc=6030071&vn=6.3.7&size=1080X2029&deviceModel=MI%208&first_channel=pp';
-			let url =
-				'v5/index/tab/feed?udid=f4007ffeb2e60ff2&vc=6030012&vn=6.3.01&size=1080X2029&deviceModel=MI%208&first_channel=xiaomi&last_channel=xiaomi&system_version_code=29';
-			let res = await this.$u.get(url);
-			if (res && res.itemList) {
-				this.arr = res.itemList;
-				this.nextPageUrl = res.nextPageUrl;
-			}
-		},
-		async upData() {
-			let res = await this.$u.get(this.nextPageUrl);
-			if (res && res.itemList) {
-				this.nextPageUrl = res.nextPageUrl;
-				let arr = this.arr.concat(res.itemList);
-				this.arr = arr;
-			}
-		}
-	}
+	methods: {}
 };
 </script>
 

@@ -13,8 +13,7 @@
 		<view class="menu-list">
 			<view class="list flex-center" v-for="(list, i) in menu" :key="i">{{ list.text }}</view>
 		</view>
-		<!-- <u-tabbar :list="vuex_tabbar"></u-tabbar> -->
-		<c-tabbar :list="vuex_tabbar"></c-tabbar>
+		<u-tabbar :list="vuex_tabbar" mid-button></u-tabbar>
 	</view>
 </template>
 

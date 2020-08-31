@@ -1,0 +1,254 @@
+<template>
+	<view class="big-page">
+		<!-- #ifdef APP-NVUE -->
+		<list :id="mypListId" :bounce="true" isSwiperList="true" ref="myp-scroller" :style="'width:750rpx;' + mypContentHeightStyle" @scroll="handleParentScroll">
+			<myp-refresher-n ref="myp-refresher" scrollerRef="myp-scroller" @refresh="handleRefresh"></myp-refresher-n>
+			<cell>
+				<!-- <swiper-head></swiper-head> -->
+				<view class="demo" style="height: 300px;">heade111r</view>
+			</cell>
+			<cell>
+				<myp-tabs-h
+					:value="currentTab"
+					:items="tabs"
+					:isTap="true"
+					textLabel="name"
+					activeTextType="primary"
+					indicatorType="primary"
+					indicatorWidth="64rpx"
+					scrollSize="750rpx"
+					justify="center"
+					@change="toChangeTab"
+				></myp-tabs-h>
+			</cell>
+			<cell>
+				<myp-content-box :includeStatus="false" :includeNav="false" :includeXBar="false" extra="180rpx">
+					<swiper id="swiper" ref="swiper" :current="currentTab" style="width:750rpx;flex:1;" @change="onSwiperChange">
+						<swiper-item>item1</swiper-item>
+						<swiper-item>item2</swiper-item>
+					</swiper>
+				</myp-content-box>
+			</cell>
+		</list>
+		<!-- #endif -->
+		<!-- #ifndef APP-NVUE -->
+		<!-- #endif -->
+		<myp-loading ref="myp-loading"></myp-loading>
+	</view>
+</template>
+
+<script>
+
+// import contentBoxMixin from '@/mypUI/myp-mixin/contentBoxMixin.js';
+// import toastMixin from '@/mypUI/myp-mixin/toastMixin.js';
+// import loadingMixin from '@/mypUI/myp-mixin/loadingMixin.js';
+// import systemMixin from '@/mypUI/myp-mixin/systemMixin.js';
+
+// import parentMixin from '@/mypUI/myp-list/header/headerParent.js';
+
+export default {
+	// mixins: [contentBoxMixin, systemMixin, toastMixin, loadingMixin, parentMixin],
+	data() {
+		return {
+			mypIncludeXBar: false,
+			mypIncludeStatus: true,
+			mypIncludeNav: true,
+			mypExtra: 10,
+			tabs: [{ name: '广场' }, { name: '关注' }],
+			currentTab: 0,
+			titleVisible: false,
+			platform: ''
+		};
+	},
+	methods: {
+		// #ifdef APP-NVUE
+		// handleRefresh() {
+		// 	let ref = null;
+		// 	if (this.currentTab === 0) {
+		// 		ref = this.$refs.recent;
+		// 	} else if (this.currentTab === 1) {
+		// 		ref = this.$refs.hot;
+		// 	}
+		// 	this.mypHandleRefresh(ref);
+		// },
+		// #endif
+		handleParentScroll(e) {
+			// #ifdef APP-NVUE
+			const offsetY = e.contentOffset.y;
+			// console.log(offsetY)
+			let offY = -offsetY;
+			if (this.platform === 'android') {
+				offY = offY - uni.upx2px(140); // refresh height
+			}
+			let pg = offY / this.mypAllHeight;
+			if (pg >= 0.92) {
+				this.titleVisible = true;
+			} else {
+				this.titleVisible = false;
+			}
+			// #endif
+			// #ifndef APP-NVUE
+			const scrollTop = e.detail.scrollTop;
+			let spg = scrollTop / this.mypAllHeight;
+			if (spg >= 0.98) {
+				this.titleVisible = true;
+			} else {
+				this.titleVisible = false;
+			}
+			// this.mypScroll(e);
+			// #endif
+		},
+		toChangeTab(i) {
+			this.toSwitchTab(i);
+		},
+		onSwiperChange(e) {
+			this.toSwitchTab(e.detail.current);
+		},
+		toSwitchTab(i) {
+			// #ifdef APP-NVUE
+			let ref = null;
+			if (i === 0) {
+				ref = this.$refs.recent;
+			} else if (i === 1) {
+				ref = this.$refs.hot;
+			}
+			// this.mypSetScrollRef(ref);
+			// #endif
+			this.currentTab = i;
+		},
+		toInitSpecial() {
+			this.toSwitchTab(this.currentTab);
+		}
+	},
+	onReady() {
+		this.mypHeaderHeight = uni.upx2px(442); //去除了status-nav的高度
+		// this.platform = this.mypGetPlatform();
+		if (this.platform === 'android') {
+			this.mypAllHeight = this.mypHeaderHeight - uni.upx2px(140);
+		} else {
+			this.mypAllHeight = this.mypHeaderHeight;
+		}
+		setTimeout(() => {
+			this.toInitSpecial();
+		}, 20);
+	},
+	onLoad() {
+		// this.platform = this.mypGetPlatform();
+	}
+};
+</script>
+
+<style lang="scss">
+@import '@/mypUI/mypui.scss';
+.ch {
+	&-nav {
+		flex-direction: row;
+		align-items: center;
+
+		&-box {
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+		}
+		&-title {
+			color: #ffffff;
+			font-size: 16px;
+			margin-right: 8rpx;
+		}
+		&-tabs {
+			height: 26px;
+			flex-direction: row;
+			justify-content: center;
+			align-items: flex-end;
+
+			&-item {
+				width: 48px;
+				text-align: center;
+				color: #ffffff;
+				font-size: 16px;
+				font-weight: 400;
+				line-height: 22px;
+
+				&-current {
+					font-size: 18px;
+					font-weight: 600;
+					line-height: 25px;
+				}
+			}
+		}
+	}
+	&-tabs {
+		padding-top: 30rpx;
+		height: 80rpx;
+		flex-direction: row;
+		justify-content: center;
+		width: 750rpx;
+		background-color: #ffffff;
+		align-items: flex-end;
+
+		&-item {
+			width: 96rpx;
+			text-align: center;
+			color: $myp-text-color;
+			font-size: 32rpx;
+			font-weight: 400;
+			line-height: 45rpx;
+
+			&-current {
+				color: $myp-text-color;
+				font-size: 36rpx;
+				font-weight: 600;
+				line-height: 50rpx;
+			}
+		}
+	}
+	&-foot {
+		&-content {
+			position: relative;
+			width: 750rpx;
+			height: 132rpx;
+		}
+		&-token {
+			background-color: transparent;
+			height: 32rpx;
+		}
+		&-body {
+			flex-direction: row;
+			height: 100rpx;
+			background-color: #ffffff;
+			align-items: center;
+			justify-content: space-between;
+		}
+		&-left {
+			width: 200rpx;
+		}
+		&-right {
+			width: 200rpx;
+			padding-left: 35rpx;
+			flex-direction: row;
+			align-items: center;
+
+			&-text {
+				margin-left: 10rpx;
+				font-size: 30rpx;
+				line-height: 42rpx;
+				color: $myp-text-color;
+			}
+		}
+		&-avatar {
+			position: absolute;
+			left: 25rpx;
+			top: 0;
+			width: 120rpx;
+			height: 120rpx;
+			overflow: hidden;
+
+			&-avatar {
+				border-radius: 20rpx;
+				width: 120rpx;
+				height: 120rpx;
+			}
+		}
+	}
+}
+</style>

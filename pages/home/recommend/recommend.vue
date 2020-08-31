@@ -91,16 +91,6 @@ export default {
 	}
 }
 
-// banner
-// .banner {
-// 	height: 370rpx;
-// 	width: 690rpx;
-// 	image {
-// 		border-radius: 10rpx;
-// 		width: 100%;
-// 	}
-// }
-
 // 社区精选
 .ugcSelectedCardCollection {
 	height: 340rpx;

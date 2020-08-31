@@ -40,33 +40,33 @@ const store = new Vuex.Store({
 		vuex_demo: '绛紫',
 		// 自定义tabbar数据
 		vuex_tabbar: [{
-				iconPath: "/static/js.png",
-				selectedIconPath: "/static/js_bak.png",
+				iconPath: "/static/img/tabbar/icon01.png",
+				selectedIconPath: "/static/img/tabbar/icon@01.png",
 				pagePath: "/pages/home/index/index",
 				text: "首页"
 			},
 			{
-				iconPath: "/static/js.png",
-				selectedIconPath: "/static/js_bak.png",
+				iconPath: "/static/img/tabbar/icon02.png",
+				selectedIconPath: "/static/img/tabbar/icon@02.png",
 				pagePath: "/pages/community/index/index",
 				text: "社区"
 			},
 			{
-				iconPath: "/static/js.png",
+				iconPath: "/static/icon@03.png",
 				selectedIconPath: "/static/js_bak.png",
 				pagePath: "",
-				text: "测试",
+				text: "",
 				midButton: true
 			},
 			{
-				iconPath: "/static/js.png",
-				selectedIconPath: "/static/js_bak.png",
+				iconPath: "/static/img/tabbar/icon03.png",
+				selectedIconPath: "/static/img/tabbar/icon@03.png",
 				pagePath: "/pages/inform/index/index",
 				text: "通知"
 			},
 			{
-				iconPath: "/static/js.png",
-				selectedIconPath: "/static/js_bak.png",
+				iconPath: "/static/img/tabbar/icon04.png",
+				selectedIconPath: "/static/img/tabbar/icon@04.png",
 				pagePath: "/pages/my/index/index",
 				text: "我的"
 			}
